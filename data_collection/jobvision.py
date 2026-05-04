@@ -30,5 +30,13 @@ def jobvision(keyword):
   }
 
   response = requests.request("POST", url, headers=headers, data=payload)
-
-  return response.text
+  result = response.json()
+  jobposts = result['data']['jobPosts']
+  joblist = []
+  for jobpost in jobposts:
+    data =  {
+    'job title': jobpost['title'],
+    'link': f"https://jobvision.ir/jobs/{jobpost['id']}"
+  }
+    joblist.append(data)
+  return joblist
